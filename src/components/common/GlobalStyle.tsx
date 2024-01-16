@@ -13,7 +13,8 @@ const defaultStyle = css`
 
     html,
     body,
-    #___gatsby {
+    #___gatsby,
+    #gatsby-focus-wrapper {
         height: 100%;
     }
 
