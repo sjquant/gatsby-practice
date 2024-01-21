@@ -38,6 +38,10 @@ const CategoryItem = styled(({ active, ...props }: GatsbyLinkProps) => (
   &:last-of-type {
     margin-right: 0;
   }
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `
 
 const CategoryList: FunctionComponent<CategoryListProps> = function ({
