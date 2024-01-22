@@ -3,7 +3,7 @@ date: '2020-08-30'
 title: 'Test'
 categories: ['Web', 'SEO', 'Optimization']
 summary: '두번째 글입니다.'
-thumbnail: './test.png'
+thumbnail: './test2.png'
 ---
 
 ### 1. Help Google Bot to Find My Contents
