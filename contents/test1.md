@@ -3,7 +3,7 @@ date: '2020-07-29'
 title: 'Test'
 categories: ['Web', 'SEO', 'Optimization']
 summary: '첫번째 글입니다.'
-thumbnail: 'https://www.pokemongoplusplus.com/img/img-2.jpg'
+thumbnail: './test.png'
 ---
 
 ### 1. Help Google Bot to Find My Contents

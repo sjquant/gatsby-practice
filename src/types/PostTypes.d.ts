@@ -3,7 +3,9 @@ export type PostFrontmatterType = {
   date: string
   categories: string[]
   summary: string
-  thumbnail: string
+  thumbnail: {
+    publicURL: string
+  }
 }
 
 export type PostListItemType = {

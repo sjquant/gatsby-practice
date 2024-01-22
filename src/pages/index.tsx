@@ -47,21 +47,26 @@ const IndexPage: FunctionComponent<IndexPageProps> = function ({
 
 export default IndexPage
 
+
 export const getPostList = graphql`
-  query MyQuery {
-  allMarkdownRemark {
-    edges {
-      node {
-	id
-        frontmatter {
-          title
-          date
-          summary
-          categories
-          thumbnail
+  query getPostList {
+    allMarkdownRemark(
+      sort: [{ frontmatter: { date: DESC } }, { frontmatter: { title: DESC } }]
+    ) {
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            summary
+            date(formatString: "YYYY.MM.DD.")
+            categories
+            thumbnail {
+              publicURL
+            }
+          }
         }
       }
     }
   }
-}
 `
