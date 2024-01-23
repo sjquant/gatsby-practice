@@ -1,7 +1,7 @@
 ---
 date: '2020-08-30'
 title: 'Test'
-categories: ['Web', 'SEO', 'Optimization']
+categories: ['SEO']
 summary: '두번째 글입니다.'
 thumbnail: './test2.png'
 ---
