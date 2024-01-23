@@ -6,7 +6,7 @@ import Footer from '@/components/common/Footer'
 import CategoryList, { type CategoryListProps } from '@/components/main/CategoryList'
 import PostList from '@/components/main/PostList'
 import { graphql } from 'gatsby'
-import type { PostListItemType } from '@/types/PostTypes'
+import type { PostListItemType } from '@/types/post'
 import type { IGatsbyImageData } from 'gatsby-plugin-image'
 import queryString, { type ParsedQuery } from 'query-string'
 

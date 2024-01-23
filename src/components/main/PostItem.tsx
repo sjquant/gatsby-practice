@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import React, { FunctionComponent } from 'react'
 import { Link } from 'gatsby'
 import { GatsbyImage } from 'gatsby-plugin-image'
-import type { PostFrontmatterType } from '@/types/PostTypes'
+import type { PostFrontmatterType } from '@/types/post'
 
 type PostItemProps =  PostFrontmatterType & { link: string }
 
