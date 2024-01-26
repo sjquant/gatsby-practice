@@ -1,11 +1,28 @@
 import React, { FunctionComponent } from 'react'
 import { graphql } from 'gatsby'
-import MainLayout from '@/components/common/MainLayout'
 
-type PostTemplateProps = {}
+import GlobalStyle from '@/components/common/GlobalStyle'
+import Footer from '@/components/common/Footer'
+import styled from '@emotion/styled'
 
-const PostTemplate: FunctionComponent<PostTemplateProps> = function (props) {
-  return <MainLayout>Post Template</MainLayout>
+
+type MainLayoutProps = {
+  children: React.ReactNode
+}
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`
+
+const PostTemplate: FunctionComponent<MainLayoutProps> = function ({ children }) {
+
+  return (<Container>
+      <GlobalStyle />
+      { children }
+      <Footer />
+    </Container>)
 }
 
 export default PostTemplate
