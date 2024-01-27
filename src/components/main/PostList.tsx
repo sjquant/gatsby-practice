@@ -1,4 +1,11 @@
-import React, { FunctionComponent, useMemo, MutableRefObject, useRef, useState, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  useMemo,
+  MutableRefObject,
+  useRef,
+  useState,
+  useEffect,
+} from 'react'
 import styled from '@emotion/styled'
 import PostItem from './PostItem'
 
@@ -22,58 +29,58 @@ const PostListWrapper = styled.div`
     width: 100%;
     padding: 50px 20px;
   }
-
 `
 
 const PostList: FunctionComponent<PostListProps> = function ({ category, posts }) {
+  const { postList, containerRef } = useInfinitePosts(category, posts)
 
-  const  { postList, containerRef } = useInfinitePosts(category, posts)
-
-  return <PostListWrapper ref={containerRef}>
-    {postList.map(
+  return (
+    <PostListWrapper ref={containerRef}>
+      {postList.map(
         ({
-          node: { id, frontmatter, fields: { slug } },
+          node: {
+            id,
+            frontmatter,
+            fields: { slug },
+          },
         }: PostListItemType) => (
-          <PostItem
-            {...frontmatter}
-            link={slug}
-            key={id}
-          />
+          <PostItem {...frontmatter} link={slug} key={id} />
         ),
       )}
-  </PostListWrapper>
+    </PostListWrapper>
+  )
 }
 
 export default PostList
-
 
 const NUMBER_OF_ITEMS_PER_PAGE = 10
 
 // 강의를 따라하는 거지만, 실제 Query를 동적으로 호출하지 않는다면 큰 효용은 없을 것 같음
 function useInfinitePosts(category: string, posts: PostListItemType[]) {
-  const containerRef: MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(
-    null,
-  )
+  const containerRef: MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null)
+  const observer: MutableRefObject<IntersectionObserver | null> = useRef<IntersectionObserver>(null)
   const [page, setPage] = useState<number>(1)
 
   const postListByCategory = useMemo<PostListItemType[]>(
     () =>
-      posts.filter(({ node: { frontmatter: { categories } } }: PostListItemType) =>
-        category !== 'All'
-          ? categories.includes(category)
-          : true,
+      posts.filter(
+        ({
+          node: {
+            frontmatter: { categories },
+          },
+        }: PostListItemType) => (category !== 'All' ? categories.includes(category) : true),
       ),
     [category],
   )
 
-  const observer: IntersectionObserver = new IntersectionObserver(
-    (entries, observer) => {
-      if (!entries[0].isIntersecting) return;
+  useEffect(() => {
+    observer.current = new IntersectionObserver((entries, observer) => {
+      if (!entries[0].isIntersecting) return
 
-      setPage(value => value + 1);
-      observer.disconnect();
-    },
-  )
+      setPage(value => value + 1)
+      observer.unobserve(entries[0].target)
+    })
+  }, [])
 
   useEffect(() => setPage(1), [category])
 
@@ -81,11 +88,12 @@ function useInfinitePosts(category: string, posts: PostListItemType[]) {
     if (
       NUMBER_OF_ITEMS_PER_PAGE * page >= postListByCategory.length ||
       containerRef.current === null ||
-      containerRef.current.children.length === 0
+      containerRef.current.children.length === 0 ||
+      observer.current === null
     )
       return
 
-    observer.observe(
+    observer.current.observe(
       containerRef.current.children[containerRef.current.children.length - 1],
     )
   }, [page, category])
@@ -95,4 +103,3 @@ function useInfinitePosts(category: string, posts: PostListItemType[]) {
     postList: postListByCategory.slice(0, page * NUMBER_OF_ITEMS_PER_PAGE),
   }
 }
-

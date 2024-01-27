@@ -12,7 +12,7 @@ module.exports = {
     title: `Solaqua's Blog`,
     description: `This is my incredibly cool blog where I write about stuff.`,
     author: `@solaqua`,
-    siteUrl: '<https://my-website-link.com>', // TODO: 배포 후 변경 예정
+    siteUrl: 'https://solaqua.test', // TODO: 배포 후 변경 예정
   },
   plugins: [
     {
@@ -107,5 +107,13 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-image`,
+    {
+      resolve: 'gatsby-plugin-canonical-urls',
+      options: {
+        siteUrl: 'https://solaqua.test',
+        stripQueryString: true,
+      },
+    },
+    'gatsby-plugin-sitemap',
   ],
 }
