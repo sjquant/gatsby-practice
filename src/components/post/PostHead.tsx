@@ -10,10 +10,10 @@ type GatsbyImgProps = {
 }
 
 type PostHeadProps = {
-    title: string,
+  title: string
   thumbnail: IGatsbyImageData
-  date: string,
-  categories: string[],
+  date: string
+  categories: string[]
 }
 
 const PostHeadWrapper = styled.div`
@@ -31,7 +31,7 @@ const BackgroundImage = styled((props: GatsbyImgProps) => (
 ))`
   z-index: -1;
   width: 100%;
-  height: 400px;
+  height: 100%;
   object-fit: cover;
   filter: brightness(0.25);
 
@@ -41,10 +41,10 @@ const BackgroundImage = styled((props: GatsbyImgProps) => (
 `
 
 const PostHead: FunctionComponent<PostHeadProps> = function ({
-    title,
-    date,
-    categories,
-    thumbnail,
+  title,
+  date,
+  categories,
+  thumbnail,
 }) {
   return (
     <PostHeadWrapper>

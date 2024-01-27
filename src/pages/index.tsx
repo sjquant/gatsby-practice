@@ -13,29 +13,40 @@ type IndexPageProps = {
     search: string
   }
   data: {
+    site: {
+      siteMetadata: {
+        title: string
+        description: string
+        siteUrl: string
+      }
+    }
     allMarkdownRemark: {
       edges: PostListItemType[]
     }
     file: {
       childImageSharp: {
-        gatsbyImageData: IGatsbyImageData 
+        gatsbyImageData: IGatsbyImageData
       }
+      publicURL: string
     }
   }
 }
 
-
 const IndexPage: FunctionComponent<IndexPageProps> = function ({
   location: { search },
   data: {
+    site: {
+      siteMetadata: { title, description, siteUrl },
+    },
     allMarkdownRemark: { edges },
-    file: { 
+    file: {
       childImageSharp: { gatsbyImageData },
+      publicURL,
     },
   },
 }) {
   const query: ParsedQuery = queryString.parse(search)
-  const category: string = query.category as string || 'All'
+  const category: string = (query.category as string) || 'All'
 
   const categoryList = useMemo(
     () =>
@@ -49,21 +60,21 @@ const IndexPage: FunctionComponent<IndexPageProps> = function ({
           }: PostListItemType,
         ) => {
           categories.forEach(category => {
-            if (list[category] === undefined) list[category] = 1;
-            else list[category]++;
-          });
+            if (list[category] === undefined) list[category] = 1
+            else list[category]++
+          })
 
-          list['All']++;
+          list['All']++
 
-          return list;
+          return list
         },
         { All: 0 },
       ),
     [],
   )
-  
+
   return (
-    <MainLayout>
+    <MainLayout title={title} description={description} url={siteUrl} image={publicURL}>
       <Introduction profileImage={gatsbyImageData} />
       <PostList posts={edges} category={category} />
       <CategoryList selectedCategory={category} categoryList={categoryList} />
@@ -73,12 +84,16 @@ const IndexPage: FunctionComponent<IndexPageProps> = function ({
 
 export default IndexPage
 
-
 export const getPostList = graphql`
   query getPostList {
-    allMarkdownRemark(
-      sort: [{ frontmatter: { date: DESC } }, { frontmatter: { title: DESC } }]
-    ) {
+    site {
+      siteMetadata {
+        title
+        description
+        siteUrl
+      }
+    }
+    allMarkdownRemark(sort: [{ frontmatter: { date: DESC } }, { frontmatter: { title: DESC } }]) {
       edges {
         node {
           id
